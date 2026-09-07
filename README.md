@@ -1,25 +1,27 @@
-# Como instalar o `kdenlive` no `Linux Ubuntu`
+# Como instalar o `kdenlive` no `Kali Linux`
 
 
 ## Resumo
 
-Este documento apresenta os passos necessários para instalar o utilitário `kdenlive` no `Linux Ubuntu`.
+Este documento apresenta os passos necessários para instalar o editor de vídeo `kdenlive` no `Kali Linux` via `apt`.
 
 
 ## _Abstract_
 
-_This document shows the steps required to install the `kdenlive` utility on `Linux Ubuntu`._
+_This document shows the steps required to install the `kdenlive` video editor on `Kali Linux` via `apt`._
 
 
 ## Descrição
 
 ### `kdenlive`
 
-O `kdenlive` é um editor de vídeo não linear de código aberto, integrante do projeto `KDE` e 
-voltado para fornecer recursos profissionais de edição.
+O `kdenlive` é um editor de vídeo não linear de código aberto, integrante do projeto `KDE` e
+baseado em `Qt`, `KDE Frameworks` e `MLT Framework`. No `Kali Linux`, o pacote `kdenlive`
+está disponível nos repositórios da distribuição e pode ser instalado pelo gerenciador de
+pacotes `apt`.
 
 
-## 1. Instalar o `kdenlive` no `Linux Ubuntu`
+## 1. Instalar o `kdenlive` no `Kali Linux`
 
 Para instalar o `kdenlive`, siga os passos abaixo:
 
@@ -31,130 +33,96 @@ Para instalar o `kdenlive`, siga os passos abaixo:
 
 2. Certifique-se de que seu sistema esteja limpo e atualizado.
 
-    2.1 Limpar o `cache` do gerenciador de pacotes `apt`. Digite:
+    2.1 Limpar o `cache` do gerenciador de pacotes `apt`. Especificamente, ele remove todos os arquivos de pacotes (`.deb`) baixados pelo `apt` e armazenados em `/var/cache/apt/archives/`. Digite o seguinte comando:
     ```bash
     sudo apt clean
     ```
 
-    2.2 Remover pacotes `.deb` antigos ou duplicados do `cache` local:
+    2.2 Remover pacotes `.deb` antigos ou duplicados do `cache` local. É útil para liberar espaço, pois remove apenas os pacotes que não podem mais ser baixados (ou seja, versões antigas de pacotes que foram atualizados). Digite o seguinte comando:
     ```bash
     sudo apt autoclean
     ```
 
-    2.3 Remover pacotes instalados automaticamente e que não são mais necessários:
+    2.3 Remover pacotes que foram automaticamente instalados para satisfazer as dependências de outros pacotes e que não são mais necessários. Digite o seguinte comando:
     ```bash
     sudo apt autoremove -y
     ```
 
-    2.4 Buscar atualizações disponíveis:
+    2.4 Buscar as atualizações disponíveis para os pacotes que estão instalados em seu sistema. Digite o seguinte comando e pressione `Enter`:
     ```bash
     sudo apt update
     ```
 
-    2.5 Corrigir pacotes quebrados:
+    2.5 **Corrigir pacotes quebrados**: Isso atualizará a lista de pacotes disponíveis e tentará corrigir pacotes quebrados ou com dependências ausentes:
     ```bash
     sudo apt --fix-broken install
     ```
 
-    2.6 Limpar novamente o `cache`:
+    2.6 Limpar o `cache` do gerenciador de pacotes `apt` novamente:
     ```bash
     sudo apt clean
     ```
 
-    2.7 Verificar pacotes que podem ser atualizados:
+    2.7 Para ver a lista de pacotes a serem atualizados, digite o seguinte comando e pressione `Enter`:
     ```bash
     sudo apt list --upgradable
     ```
 
-    2.8 Atualizar os pacotes instalados:
+    2.8 Realmente atualizar os pacotes instalados para as suas versões mais recentes, com base na última vez que você executou `sudo apt update`. Digite o seguinte comando e pressione `Enter`:
     ```bash
     sudo apt full-upgrade -y
     ```
 
-3. Instale o `kdenlive` e verifique a instalação:
+
+
+3. Instalar o `kdenlive` pelo `apt` e verificar a instalação:
+    
     ```bash
-    sudo apt update
-    sudo apt install kdenlive
+    sudo apt install kdenlive -y
     kdenlive --version
     ```
 
+## 2. Verificar o pacote instalado
 
-## 2. Preparar a distribuição `PREDICTIONS`
-
-O arquivo tar compactado `PREDICTIONS.tar.gz` contém os vários programas e _scripts_ necessários
-para executar os procedimentos do `kdenlive`.
-
-Faça o seguinte...
-
-1. `gunzip PREDICTIONS.tar.gz`.
-
-2. `tar -xvf PREDICTIONS.tar`.
-
-Esses passos criam o diretório `PREDICTIONS`, que conterá as subpastas `MOLPAK`, `PMIN`, `UTILITIES`
-e `new-U`, além de vários arquivos.
-
-O diretório `PREDICTIONS` e cada uma das subpastas possuem arquivos `compile-all` para compilar e
-ligar os programas.
-
-Antes de compilar, substitua o nome do nosso compilador pelo nome do seu compilador em todos os
-arquivos `compile-all`. Usamos `lf95`.
-
-Há vários programas e scripts na subpasta `UTILITIES`. É necessário trocar o nome `PREDICTIONS` pelo
-caminho do diretório em que os programas residirão para execução posterior. Por exemplo, nosso
-diretório é `/export/software/PREDICTIONS`. Isso é feito pelos seguintes passos:
-
-1. Substituir `lf95` pelo nome do seu compilador em `compile-all` no diretório superior, aqui
-chamado de `PREDICTIONS`;
-
-2. Copiar todos os arquivos de `new-U` para `UTILITIES`:
-
-    ```bash
-    cp new-U/* UTILITIES/.
-    ```
-
-3. `./compile-all`: compila e liga o programa `rename-dir.f90`;
-
-4. `./rename-dir.com`: substitui todas as ocorrências de `PREDICTIONS` nos arquivos necessários em
-`UTILITIES` por `/export/software/PREDICTIONS` ou qualquer diretório em que você estiver ao executar
-`./rename-dir.com`.
-
-Estabeleça os seguintes _aliases_:
+Após a instalação, confirme se o binário foi localizado pelo `shell` e se o pacote instalado vem
+dos repositórios configurados do `Kali Linux`:
 
 ```bash
-alias transform /export/software/PREDICTIONS/UTILITIES/transform.exe
-alias prepare-files /export/software/PREDICTIONS/UTILITIES/prepare-files.exe
-alias make-files /export/software/PREDICTIONS/UTILITIES/make-files.com
-alias chem3d /export/software/PREDICTIONS/UTILITIES/chem3d.exe
-alias summarize /export/software/PREDICTIONS/UTILITIES/summarize_tab.com
-alias resort-summarize /export/software/PREDICTIONS/UTILITIES/resort-summarize.com
+command -v kdenlive
+apt policy kdenlive
 ```
 
-Os _aliases_ facilitam a execução dos diversos cálculos. Por exemplo, para realizar tarefas com o
-`kdenlive`, basta digitar `make-files` e responder às perguntas que se seguem.
+Se o `apt` não localizar o pacote, verifique se o arquivo `/etc/apt/sources.list` contém os
+repositórios oficiais do `Kali Linux` e execute novamente `sudo apt update` antes de repetir a
+instalação.
 
-## 3. Executar um arquivo de entrada
 
-Você pode executar o `kdenlive` informando um arquivo de vídeo:
+## 3. Executar o `kdenlive`
+
+Você pode abrir o `kdenlive` pelo menu de aplicativos ou pelo `Terminal Emulator`:
 ```bash
-kdenlive ~/exemplos/video.mp4
+kdenlive
 ```
-Esse comando executa o programa usando o arquivo `video.mp4`.
-
-
-## 4. Usar uma variável de terminal para definir o arquivo
-
-Também é possível definir o caminho em uma variável antes de chamar o `kdenlive`:
+Também é possível informar um arquivo de vídeo para abrir o editor já apontando para esse arquivo:
 ```bash
-input_file="~/exemplos/video.mp4"
-kdenlive "$input_file"
+kdenlive ~/Videos/video.mp4
+```
+
+
+## 4. Remover o `kdenlive`
+
+Caso seja necessário remover o `kdenlive` instalado pelo `apt`, use:
+```bash
+sudo apt remove kdenlive -y
+sudo apt autoremove -y
 ```
 
 
 ## Referências
 
-[1] OPENAI.
-**Instalar o `kdenlive` no `linux ubuntu` pelo `terminal emulator`**.
-Disponível em: <https://chatgpt.com/c/88d3b432-a9e7-4a62-b480-a0e38cd83113>.
-ChatGPT.
-Acessado em: 15/08/2025 13:07.
+[1] OPENAI. **Instalar o `kdenlive` no `kali linux` pelo `terminal emulator`**. Disponível em: <https://chatgpt.com/g/g-p-6980caf949648191ad6acfcdbe590f9e/c/7c35ad4d-d9c9-4498-9837-ab1b99548eb5>. ChatGPT. Acessado em: 07/09/2026.
+
+[2] KALI. **Kdenlive**. Disponível em: <https://pkg.kali.org/pkg/kdenlive>. Acessado em: 07/09/2026.
+
+[3] KDE. **Kdenlive downloads**. Disponível em: <https://kdenlive.org/download/>. Acessado em: 07/09/2026.
 
