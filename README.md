@@ -18,7 +18,7 @@ O `molpak` é um conjunto de programas para predição de estruturas cristalinas
 
 Para instalar o `molpak`, siga os passos abaixo:
 
-1. Abra o `Terminal Emulator`. Você pode fazer isso pressionando: `Ctrl + Alt + T`
+1. Abrir o `Terminal Emulator`. Você pode fazer isso pressionando: `Ctrl + Alt + T`
 
 2. Certifique-se de que seu sistema esteja limpo e atualizado.
 
